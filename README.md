@@ -4,6 +4,7 @@
 
 # 10XPlugins
 [![forthebadge](https://forthebadge.com/images/badges/works-on-my-machine.svg)](https://forthebadge.com)
+<br>
 Plugin compatible with [10x editor](https://10xeditor.com/index.htm).<br>
 
 ## OpenCL
