@@ -1,6 +1,10 @@
-# 10XPlugins
+[![forthebadge](https://forthebadge.com/images/badges/built-by-developers.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/made-with-python.svg)](https://forthebadge.com)
 
-Plugin compatible with 10x editor(https://10xeditor.com/index.htm).<br>
+# 10XPlugins
+[![forthebadge](https://forthebadge.com/images/badges/works-on-my-machine.svg)](https://forthebadge.com)
+Plugin compatible with [10x editor](https://10xeditor.com/index.htm).<br>
 
 ## OpenCL
 To testing OpenCL kernel compilation.<br>
