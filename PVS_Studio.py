@@ -11,9 +11,8 @@ def __print(msg: str):
     editor.LogToBuildOutput(msg)
     editor.LogToBuildOutput('\n')
 
-def __read_plog():
-    plog = f'{editor.GetWorkspaceFilename()}.plog'
-    tree = ET.parse(plog)
+def __read_plog(plog_file):
+    tree = ET.parse(plog_file)
     root = tree.getroot()
 
     sln_path = root.find('Solution_Path')
@@ -36,24 +35,31 @@ def __read_plog():
         __print(f'\t{message}')
 
 
-def __pvs_studio_run(cmd: str):
-    editor.LogToBuildOutput(f'{cmd}\n')
+def __pvs_studio_run(cmd: str, plog_file: str):
+    __print(f'{cmd}\n')
     process = subprocess.Popen(cmd)
-    __read_plog()
+    process.wait()
+    __read_plog(plog_file)
 
 def PVSStudioCmd():
-    editor.Clear10xOutput()
-    editor.ShowBuildOutput()
     editor.ClearBuildOutput()
+    editor.Clear10xOutput()
 
-    editor.LogToBuildOutput('=== PVS-STUDIO ===\n')
+    editor.ShowBuildOutput()
+
+    __print('===== PVS-STUDIO =====')
 
     workspace = editor.GetWorkspaceFilename()
     exe = 'C:\Program Files (x86)\PVS-Studio\PVS-Studio_Cmd.exe'
-    arg_sln = f'-t "{workspace}"'
-    arg_log = f'-o "{workspace}.plog"'
-    cmd = f'{exe} {arg_sln} {arg_log}'
+    arg_sln = f'--target "{workspace}"'
+    arg_log = f'--output "{workspace}.plog"'
+    arg_cfg = f'--configuration {editor.GetBuildConfig()}'
+    arg_plat = f'--platform {editor.GetBuildPlatform()}'
+    cmd = f'{exe} {arg_sln} {arg_cfg} {arg_plat} {arg_log}'
 
-    t = threading.Thread(target=__pvs_studio_run, args=(cmd,))
+    plog_file = f'{editor.GetWorkspaceFilename()}.plog'
+
+    t = threading.Thread(
+        target=__pvs_studio_run,
+        args=(cmd, plog_file,))
     t.start()
-
